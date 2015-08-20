@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38AC4D5F-0237-48D3-9F27-6A67491005DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StackOverflow.Shared.DependencyResolver</RootNamespace>
+    <AssemblyName>StackOverflow.Shared.DependencyResolver</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessModule.cs" />
+    <Compile Include="DataAccessModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StackOverflow.Business.BusinessComponents\StackOverflow.Business.BusinessComponents.csproj">
+      <Project>{E4DD479C-49BF-429F-BD8C-D096DD5A02DF}</Project>
+      <Name>StackOverflow.Business.BusinessComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StackOverflow.Business.Contracts\StackOverflow.Business.Contracts.csproj">
+      <Project>{FCCFCEEC-C1F9-4857-93C6-4DDE563692C7}</Project>
+      <Name>StackOverflow.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StackOverflow.Data.Contracts\StackOverflow.Data.Contracts.csproj">
+      <Project>{dcbca8c8-0dbf-42b9-bd05-77e9ac5a344d}</Project>
+      <Name>StackOverflow.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StackOverflow.Data.DataAccess\StackOverflow.Data.DataAccess.csproj">
+      <Project>{d0c86caa-58ad-4246-bd88-739ab560ff6b}</Project>
+      <Name>StackOverflow.Data.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
