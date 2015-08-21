@@ -17,7 +17,7 @@ namespace StackOverflow.Data.DataAccess.Repositories
 			this.items = items;
 		}
 
-		public virtual T Get(int id)
+		public virtual T Get(object id)
 		{
 			T result = items.Find(id);
 			return result;
@@ -46,7 +46,7 @@ namespace StackOverflow.Data.DataAccess.Repositories
 			return item;
 		}
 
-		public T Delete(int id)
+		public T Delete(object id)
 		{
 			T item = items.Find(id);
 			if (item != null)

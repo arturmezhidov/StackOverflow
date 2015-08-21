@@ -1,0 +1,11 @@
+﻿@model StackOverflow.Shared.Entities.Question
+
+<hr />
+<h4>
+	@Html.ActionLink(Model.Title, "", new { id = Model.Id })
+</h4>
+
+<p>
+	@Html.ActionLink("Edit", "Edit", "Questions", new { id = Model.Id }, new { @class = "" }) |
+	@Model.Date
+</p>

@@ -1,30 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using StackOverflow.Business.BusinessModels;
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Models.Account;
+using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
 	[Authorize]
 	public class AccountController : Controller
 	{
-		private readonly IIdentityUserService identityUserService;
-
 		public AccountController(IIdentityUserService identityService)
 		{
-			identityUserService = identityService;
-			UserManager = identityUserService.GetManager();
+			UserManager = identityService.GetManager();
 		}
  
 		public UserManager<IdentityUser> UserManager { get; private set; }
@@ -80,9 +72,9 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Mapper.CreateMap<RegisterViewModel, ApplicationUser>();
-				ApplicationUser appUser = Mapper.Map<RegisterViewModel, ApplicationUser>(model);
-				IdentityUser user = identityUserService.Create(appUser);
+				Mapper.CreateMap<RegisterViewModel, User>();
+				IdentityUser user = Mapper.Map<RegisterViewModel, User>(model);
+				user.UserName = model.Email;
 
 				var result = await UserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
@@ -106,16 +98,12 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
 		{
-			ManageMessageId? message = null;
 			IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
-			if (result.Succeeded)
-			{
-				message = ManageMessageId.RemoveLoginSuccess;
-			}
-			else
-			{
-				message = ManageMessageId.Error;
-			}
+			
+			ManageMessageId? message = result.Succeeded 
+				? ManageMessageId.RemoveLoginSuccess 
+				: ManageMessageId.Error;
+
 			return RedirectToAction("Manage", new { Message = message });
 		}
 
@@ -311,7 +299,7 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
 			ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
-			return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
+			return PartialView("_RemoveAccountPartial", linkedAccounts);
 		}
 
 		protected override void Dispose(bool disposing)

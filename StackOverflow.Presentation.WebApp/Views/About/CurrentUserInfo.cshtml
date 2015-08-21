@@ -1,0 +1,100 @@
+﻿@model StackOverflow.Presentation.WebApp.Models.User.UserInfoViewModel
+
+@{
+	ViewBag.Title = "About me";
+}
+
+<h2>About me</h2>
+
+<div>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.LastName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LastName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Nickname)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Nickname)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Post)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Post)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Experience)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Experience)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Technologies)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Technologies)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Questions)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Questions)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Answers)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Answers)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.LikeAnswers)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LikeAnswers)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.AcceptedAnswers)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.AcceptedAnswers)
+		</dd>
+	</dl>
+</div>

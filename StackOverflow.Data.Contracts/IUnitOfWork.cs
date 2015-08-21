@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Identity.EntityFramework;
-using StackOverflow.Data.Entities;
+using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Data.Contracts
 {

@@ -9,6 +9,8 @@ namespace StackOverflow.Shared.DependencyResolver
 		public override void Load()
 		{
 			Bind<IIdentityUserService>().To<IdentityUserService>();
+			Bind<IQuestionService>().To<QuestionService>();
+			Bind<IUserService>().To<UserService>();
 		}
 	}
 }

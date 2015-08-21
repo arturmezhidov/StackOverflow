@@ -1,5 +1,5 @@
 ﻿using StackOverflow.Data.DataAccess.DataContexts;
-using StackOverflow.Data.Entities;
+using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Data.DataAccess.Repositories
 {

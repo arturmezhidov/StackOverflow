@@ -1,4 +1,4 @@
-﻿namespace StackOverflow.Data.Entities
+﻿namespace StackOverflow.Shared.Entities
 {
 	public class Like
 	{

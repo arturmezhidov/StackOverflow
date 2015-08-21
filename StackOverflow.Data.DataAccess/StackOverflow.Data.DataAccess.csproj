@@ -59,9 +59,9 @@
       <Project>{DCBCA8C8-0DBF-42B9-BD05-77E9AC5A344D}</Project>
       <Name>StackOverflow.Data.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StackOverflow.Data.Entities\StackOverflow.Data.Entities.csproj">
-      <Project>{DBB31AD8-16F4-4A01-AEBE-4598EC8F732F}</Project>
-      <Name>StackOverflow.Data.Entities</Name>
+    <ProjectReference Include="..\StackOverflow.Shared.Entities\StackOverflow.Shared.Entities.csproj">
+      <Project>{B1706205-853C-468A-B989-5C8C988D96A7}</Project>
+      <Name>StackOverflow.Shared.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

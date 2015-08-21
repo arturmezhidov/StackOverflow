@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
-
-using StackOverflow.Data.Entities;
+using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Data.DataAccess.DataContexts
 {
