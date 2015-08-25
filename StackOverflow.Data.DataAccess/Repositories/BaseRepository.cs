@@ -23,30 +23,30 @@ namespace StackOverflow.Data.DataAccess.Repositories
 			return result;
 		}
 
-		public IEnumerable<T> GetAll()
+		public virtual IEnumerable<T> GetAll()
 		{
 			return items;
 		}
 
-		public IEnumerable<T> Find(Func<T, bool> predicate)
+		public virtual IEnumerable<T> Find(Func<T, bool> predicate)
 		{
 			IEnumerable<T> result = items.Where(predicate).ToList();
 			return result;
 		}
 
-		public T Create(T item)
+		public virtual T Create(T item)
 		{
-			items.Add(item);
+			item = items.Add(item);
 			return item;
 		}
 
-		public T Update(T item)
+		public virtual T Update(T item)
 		{
 			context.Entry(item).State = EntityState.Modified;
 			return item;
 		}
 
-		public T Delete(object id)
+		public virtual T Delete(object id)
 		{
 			T item = items.Find(id);
 			if (item != null)

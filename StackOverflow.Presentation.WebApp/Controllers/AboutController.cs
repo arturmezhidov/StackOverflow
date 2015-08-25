@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
-using StackOverflow.Business.BusinessModels;
+
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Models.User;
 using StackOverflow.Shared.Entities;
@@ -14,7 +12,7 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 {
 	public class AboutController : Controller
 	{
-		private IUserService userService;
+		private readonly IUserService userService;
 
 		public AboutController(IUserService userService)
 		{
@@ -25,22 +23,20 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		// GET: /About/User
 		public ActionResult UserInfo(object id)
 		{
-			User user = userService.GetById(id);
-			
-			UserInfoViewModel userInfo = new UserInfoViewModel()
+			if (User.Identity.IsAuthenticated) 
 			{
-				FirstName = user.FirstName,
-				LastName = user.LastName,
-				Email = user.Email,
-				Nickname = String.IsNullOrWhiteSpace(user.Nickname) ? "No information" : user.Nickname,
-				Post = String.IsNullOrWhiteSpace(user.Nickname) ? "No information" : user.Nickname,
-				Experience = user.Experience ?? 0,
-				Technologies = String.IsNullOrWhiteSpace(user.Technologies) ? "No information" : user.Technologies,
-			};
+				object userId = User.Identity.GetUserId();
+				if (userId.Equals(id)) 
+				{
+					return RedirectToAction("CurrentUserInfo");
+				}
+			}
 
+			User user = userService.GetById(id);
+			UserViewModel userInfo = getUserInfoViewModel(user);
 			return View(userInfo);
 		}
-
+		
 		//
 		// GET: /About/Current
 		[Authorize]
@@ -49,23 +45,36 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 			object id = User.Identity.GetUserId();
 
 			User user = userService.GetById(id);
+			UserViewModel userInfo = getUserInfoViewModel(user);
+			IEnumerable<Question> questions = user.Questions;
 
-			UserInfoViewModel userInfo = new UserInfoViewModel()
+			Mapper.CreateMap<Rating, RatingViewModel>();
+			Rating rating = userService.GetRating(id);
+			RatingViewModel ratingViewModel = Mapper.Map<Rating, RatingViewModel>(rating);
+
+			UserInfoViewModel viewModel = new UserInfoViewModel() 
 			{
+				User = userInfo,
+				Rating = ratingViewModel,
+				Questions = questions
+			};
+
+			return View(viewModel);
+		}
+
+		private UserViewModel getUserInfoViewModel(User user) 
+		{
+			UserViewModel userInfo = new UserViewModel() {
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				Email = user.Email,
 				Nickname = String.IsNullOrWhiteSpace(user.Nickname) ? "No information" : user.Nickname,
-				Post = String.IsNullOrWhiteSpace(user.Nickname) ? "No information" : user.Nickname,
+				Post = String.IsNullOrWhiteSpace(user.Post) ? "No information" : user.Post,
 				Experience = user.Experience ?? 0,
 				Technologies = String.IsNullOrWhiteSpace(user.Technologies) ? "No information" : user.Technologies,
 			};
 
-			UserRating rating = userService.GetRating(id);
-			Mapper.CreateMap<UserRating, UserInfoViewModel>();
-			Mapper.Map(rating, userInfo);
-
-			return View(userInfo);
+			return userInfo;
 		}
 	}
 }

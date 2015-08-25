@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web.Http;
 using System.Web.Mvc;
 using Ninject.Modules;
 using StackOverflow.Business.Contracts;
@@ -52,6 +53,9 @@ namespace StackOverflow.Presentation.WebApp.App_Start
 				kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
 				RegisterServices(kernel);
+
+				GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
+
 				return kernel;
 			}
 			catch

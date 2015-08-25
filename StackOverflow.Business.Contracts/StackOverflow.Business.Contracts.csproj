@@ -42,16 +42,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAnswerService.cs" />
     <Compile Include="IUserService .cs" />
     <Compile Include="IIdentityUserService.cs" />
     <Compile Include="IQuestionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StackOverflow.Business.BusinessModels\StackOverflow.Business.BusinessModels.csproj">
-      <Project>{175F6FEA-25E5-42BE-BE4C-63C0A5AB36E1}</Project>
-      <Name>StackOverflow.Business.BusinessModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Shared.Entities\StackOverflow.Shared.Entities.csproj">
       <Project>{B1706205-853C-468A-B989-5C8C988D96A7}</Project>
       <Name>StackOverflow.Shared.Entities</Name>

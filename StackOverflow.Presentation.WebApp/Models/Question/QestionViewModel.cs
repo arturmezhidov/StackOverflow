@@ -10,12 +10,20 @@ namespace StackOverflow.Presentation.WebApp.Models.Question
 {
 	public class QestionViewModel
 	{
+		public int Id { get; set; }
+
 		[Required]
 		[DisplayName("Question title")]
-		
 		public string Title { get; set; }
+
 		[Required]
 		[DisplayName("Question content")]
 		public string Content { get; set; }
+
+		[DisplayName("Date create")]
+		public DateTime Date { get; set; }
+
+		public string UserId { get; set; }
+		public string UserName { get; set; }
 	}
 }

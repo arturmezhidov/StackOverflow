@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using StackOverflow.Business.BusinessModels;
+﻿using System.Linq;
+
 using StackOverflow.Business.Contracts;
 using StackOverflow.Data.Contracts;
 using StackOverflow.Shared.Entities;
@@ -23,7 +21,7 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return user;
 		}
 
-		public UserRating GetRating(object id)
+		public Rating GetRating(object id)
 		{
 			User user = uow.Users.Get(id);
 
@@ -45,7 +43,7 @@ namespace StackOverflow.Business.BusinessComponents.Services
 				select answer)
 				.Count();
 
-			UserRating rating = new UserRating
+			Rating rating = new Rating
 			{
 				Questions = questions,
 				Answers = answers,

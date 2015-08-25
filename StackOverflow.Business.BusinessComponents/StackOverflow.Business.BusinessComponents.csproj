@@ -46,15 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AnswerService.cs" />
     <Compile Include="Services\IdentityUserService.cs" />
     <Compile Include="Services\QuestionService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StackOverflow.Business.BusinessModels\StackOverflow.Business.BusinessModels.csproj">
-      <Project>{175F6FEA-25E5-42BE-BE4C-63C0A5AB36E1}</Project>
-      <Name>StackOverflow.Business.BusinessModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Business.Contracts\StackOverflow.Business.Contracts.csproj">
       <Project>{fccfceec-c1f9-4857-93c6-4dde563692c7}</Project>
       <Name>StackOverflow.Business.Contracts</Name>

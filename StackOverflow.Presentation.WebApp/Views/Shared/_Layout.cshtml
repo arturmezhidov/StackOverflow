@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using StackOverflow.Presentation.WebApp.Properties;
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -17,17 +19,17 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				@Html.ActionLink("StackOverflow", "Index", "Home", null, new { @class = "navbar-brand" })
+				@Html.ActionLink(Resources.ApplicationName, "Index", "Home", null, new { @class = "navbar-brand" })
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li>@Html.ActionLink("Home", "Index", "Home")</li>
 					<li>@Html.ActionLink("Add question", "Create", "Questions")</li>
+					<li>@Html.ActionLink("Active question", "Index", "Questions")</li>
 					@if (Request.IsAuthenticated)
 					{
-						<li>@Html.ActionLink("My question", "Index", "Questions")</li>
+						<li>@Html.ActionLink("About me", "CurrentUserInfo", "About")</li>
 					}
-					<li>@Html.ActionLink("About", "About", "Home")</li>
 				</ul>
 				@Html.Partial("_LoginPartial")
 			</div>
@@ -37,7 +39,7 @@
 		@RenderBody()
 		<hr />
 		<footer>
-			<p>&copy; @DateTime.Now.Year - StackOverflow</p>
+			<p>&copy; @DateTime.Now.Year - @Resources.ApplicationName</p>
 		</footer>
 	</div>
 

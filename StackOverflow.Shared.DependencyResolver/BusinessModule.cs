@@ -11,6 +11,7 @@ namespace StackOverflow.Shared.DependencyResolver
 			Bind<IIdentityUserService>().To<IdentityUserService>();
 			Bind<IQuestionService>().To<QuestionService>();
 			Bind<IUserService>().To<UserService>();
+			Bind<IAnswerService>().To<AnswerService>();
 		}
 	}
 }

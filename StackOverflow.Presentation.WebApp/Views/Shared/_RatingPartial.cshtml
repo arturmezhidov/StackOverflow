@@ -1,0 +1,30 @@
+﻿@model StackOverflow.Presentation.WebApp.Models.User.RatingViewModel
+
+<div>
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Questions)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Questions)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.Answers)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.Answers)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.LikeAnswers)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.LikeAnswers)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.AcceptedAnswers)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.AcceptedAnswers)
+		</dd>
+	</dl>
+</div>

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using StackOverflow.Business.BusinessModels;
+
 using StackOverflow.Business.Contracts;
-using StackOverflow.Presentation.WebApp.Models.Account;
 using StackOverflow.Presentation.WebApp.Models.Question;
 using StackOverflow.Shared.Entities;
 
@@ -26,11 +22,11 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 
 		//
 		// GET: /Questions/
+		[AllowAnonymous]
 		public ActionResult Index()
 		{
-			string id = User.Identity.GetUserId();
-			UserQuestionsViewModel userQuestions = new UserQuestionsViewModel(questionService.GetUserQuestions(id));
-			return View(userQuestions);
+			IEnumerable<Question> questions = questionService.GetActiveQuestions();
+			return View(questions);
 		}
 
 		//
@@ -53,9 +49,14 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 
 				question.UserId = User.Identity.GetUserId();
 
-				questionService.Add(question);
+				question = questionService.Add(question);
 
-				return RedirectToAction("Index");
+				return RedirectToRoute(new
+				{
+					controller = "Questions",
+					action = "Answers",
+					id = question.Id
+				});
 			}
 			catch
 			{
@@ -80,7 +81,10 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			try
 			{
-				// TODO: Add update logic here
+				Question question = questionService.GetQuestionById(id);
+				question.Title = model.Title;
+				question.Content = model.Content;
+				questionService.Update(question);
 
 				return RedirectToAction("Index");
 			}
@@ -92,26 +96,15 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 
 		//
 		// GET: /Questions/Delete/5
-		public ActionResult Delete(int id)
+		[AllowAnonymous]
+		public ActionResult Answers(int id)
 		{
-			return View();
-		}
+			Question question = questionService.GetQuestionById(id);
+			Mapper.CreateMap<Question, QestionViewModel>();
+			QestionViewModel vm = Mapper.Map<Question, QestionViewModel>(question);
+			vm.UserName = String.Format("{0} {1}", question.User.FirstName, question.User.LastName);
 
-		//
-		// POST: /Questions/Delete/5
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection)
-		{
-			try
-			{
-				// TODO: Add delete logic here
-
-				return RedirectToAction("Index");
-			}
-			catch
-			{
-				return View();
-			}
+			return View(vm);
 		}
 	}
 }

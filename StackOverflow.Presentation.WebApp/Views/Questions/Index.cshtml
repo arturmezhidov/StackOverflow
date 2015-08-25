@@ -1,27 +1,15 @@
 ﻿@using StackOverflow.Shared.Entities
-@model StackOverflow.Presentation.WebApp.Models.Question.UserQuestionsViewModel
+
+@model IEnumerable<Question>
 
 @{
 	ViewBag.Title = "Index";
 }
 
-@if (!Model.Any())
-{
-	<h2>No questions</h2>
-	<h3>
-		To add a question, click @Html.ActionLink("here", "Create").
-	</h3>
+<h2>Active questions</h2>
+
+@foreach (Question question in Model) {
+	<hr />
+	@Html.ActionLink(String.Format("{0} {1}", question.User.FirstName, question.User.LastName), "UserInfo", "About", new { id = question.UserId }, null)
+	@Html.Partial("_QuestionPartial", question)
 }
-else
-{
-	<h2>My questions</h2>
-
-	foreach (Question question in Model)
-	{
-		@Html.Partial("_QuestionPartial", question)
-	}
-
-	<hr/>
-	@Html.ActionLink("Ask a question", "Create", null, new { @class = "btn btn-default" })
-}
-

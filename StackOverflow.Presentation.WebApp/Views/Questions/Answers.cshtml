@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+
+@model StackOverflow.Presentation.WebApp.Models.Question.QestionViewModel
+
+@Scripts.Render("~/bundles/jquery")
+
+<div data-bind="identific: @Model.Id">
+
+	<div class="jumbotron">
+
+		<h2>@Model.Title</h2>
+		<h4>@Model.Content</h4>
+		<hr />
+		<h5>
+			<span>@Html.ActionLink(@Model.UserName, "UserInfo", "About", new { id = @Model.UserId }, null)</span> |
+			<span>@Model.Date</span> |
+			<span>Answers <span data-bind="text: answers().length"></span></span>
+		</h5>
+
+	</div>
+
+	<h2>Answers (<span data-bind="text: answers().length"></span>)</h2>
+
+	<div data-bind="foreach: answers">
+		<div class="list-item">
+			<div class="user-ref">
+				<a data-bind="attr: { href: '/About/UserInfo/' + UserId }">
+					<span data-bind="text: UserName"></span>
+				</a>
+			</div>
+			<p data-bind="text: Description" class="answer"></p>
+			<div>
+				<span data-bind="text: Date" class="date"></span>
+				<div class="like-container">
+					<span data-bind="click: $parent.liking, css: { 'thumbs-up-select': Liked }" class="glyphicon glyphicon-thumbs-up thumbs-up"></span>
+					<span data-bind="text: LikesCount" class="text-right"></span>
+					
+					
+					@*<span data-bind="text: IsAccepted" class="text-right"></span>*@
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	@if (User.Identity.IsAuthenticated)
+	{
+		<h2>Your answer</h2>
+
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-10">
+					<textarea data-bind="value: newAnswer" class="form-control"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-10">
+				<button data-bind="click: add" class="btn btn-default">OK</button>
+			</div>
+		</div>
+	}
+	else
+	{
+		<p>To leave a reply please @Html.ActionLink("login", "Login", "Account") or @Html.ActionLink("register", "Register", "Account")</p>
+	}
+
+</div>
+
+<script data-main="../../js/main" src="../../Scripts/require.js"></script>

@@ -55,6 +55,10 @@
       <HintPath>C:\Users\artur.mezhidov\Documents\Visual Studio 2013\Projects\WebApplication2\WebApplication2\bin\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -68,12 +72,27 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin">
+      <HintPath>C:\Users\artur.mezhidov\Documents\Visual Studio 2013\Projects\AngularJSWebApiEmpty3\WebApplication2\bin\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -117,10 +136,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
@@ -179,9 +194,12 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -190,16 +208,40 @@
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Account\ManageUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
+    <Compile Include="Models\AnswerViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerPostModel.cs" />
+    <Compile Include="Models\Answer\LikeViewModel.cs" />
     <Compile Include="Models\Question\QestionViewModel.cs" />
     <Compile Include="Models\Question\UserQuestionsViewModel.cs" />
+    <Compile Include="Models\User\RatingViewModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
+    <Compile Include="Models\User\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\Style.css" />
+    <Content Include="js\app.js" />
+    <Content Include="js\config.js" />
+    <Content Include="js\customBindings\identific.js" />
+    <Content Include="js\data\BaseService.js" />
+    <Content Include="js\data\dataContext.js" />
+    <Content Include="js\main.js" />
+    <Content Include="js\models\AnswerPostModel.js" />
+    <Content Include="js\models\LikePostModel.js" />
+    <Content Include="js\viewModels\AnswersViewModel.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
+    <Content Include="Scripts\r.js" />
+    <Content Include="Scripts\require.js" />
+    <Content Include="Views\favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -246,7 +288,10 @@
     <Content Include="Views\Shared\_InputQuestionPartial.cshtml" />
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\About\UserInfo.cshtml" />
+    <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
     <Content Include="Views\About\CurrentUserInfo.cshtml" />
+    <Content Include="Views\Shared\_RatingPartial.cshtml" />
+    <Content Include="Views\Questions\Answers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -259,10 +304,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StackOverflow.Business.BusinessModels\StackOverflow.Business.BusinessModels.csproj">
-      <Project>{175F6FEA-25E5-42BE-BE4C-63C0A5AB36E1}</Project>
-      <Name>StackOverflow.Business.BusinessModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Business.Contracts\StackOverflow.Business.Contracts.csproj">
       <Project>{fccfceec-c1f9-4857-93c6-4dde563692c7}</Project>
       <Name>StackOverflow.Business.Contracts</Name>
@@ -275,6 +316,12 @@
       <Project>{B1706205-853C-468A-B989-5C8C988D96A7}</Project>
       <Name>StackOverflow.Shared.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
