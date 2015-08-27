@@ -60,6 +60,10 @@
       <Project>{dcbca8c8-0dbf-42b9-bd05-77e9ac5a344d}</Project>
       <Name>StackOverflow.Data.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StackOverflow.Shared.Components\StackOverflow.Shared.Components.csproj">
+      <Project>{20ceec9b-38ab-4183-b76b-9fc9fa5d1582}</Project>
+      <Name>StackOverflow.Shared.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Shared.Entities\StackOverflow.Shared.Entities.csproj">
       <Project>{B1706205-853C-468A-B989-5C8C988D96A7}</Project>
       <Name>StackOverflow.Shared.Entities</Name>

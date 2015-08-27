@@ -1,9 +1,10 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model string
 
 @{
-    ViewBag.Title = "Error";
+	ViewBag.Title = "Error";
 }
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<div class="jumbotron">
+	<h1 class="text-danger">Error.</h1>
+	<h2 class="text-danger">An error occurred while processing your request.</h2>
+	<h5>Aditional information: @Model</h5>
+</div>

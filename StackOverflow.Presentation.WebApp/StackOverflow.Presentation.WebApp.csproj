@@ -201,6 +201,7 @@
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Filters\ExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -211,7 +212,7 @@
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\Answer\AnswerPostModel.cs" />
     <Compile Include="Models\Answer\LikeViewModel.cs" />
-    <Compile Include="Models\Question\QestionViewModel.cs" />
+    <Compile Include="Models\Question\QuestionViewModel.cs" />
     <Compile Include="Models\Question\UserQuestionsViewModel.cs" />
     <Compile Include="Models\User\RatingViewModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
@@ -234,13 +235,14 @@
     <Content Include="js\data\BaseService.js" />
     <Content Include="js\data\dataContext.js" />
     <Content Include="js\main.js" />
-    <Content Include="js\models\AnswerPostModel.js" />
-    <Content Include="js\models\LikePostModel.js" />
+    <Content Include="js\models\Answer.js" />
+    <Content Include="js\models\Like.js" />
     <Content Include="js\viewModels\AnswersViewModel.js" />
     <Content Include="Scripts\knockout-3.3.0.debug.js" />
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
+    <Content Include="Scripts\slider.js" />
     <Content Include="Views\favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -307,6 +309,10 @@
     <ProjectReference Include="..\StackOverflow.Business.Contracts\StackOverflow.Business.Contracts.csproj">
       <Project>{fccfceec-c1f9-4857-93c6-4dde563692c7}</Project>
       <Name>StackOverflow.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StackOverflow.Shared.Components\StackOverflow.Shared.Components.csproj">
+      <Project>{20CEEC9B-38AB-4183-B76B-9FC9FA5D1582}</Project>
+      <Name>StackOverflow.Shared.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\StackOverflow.Shared.DependencyResolver\StackOverflow.Shared.DependencyResolver.csproj">
       <Project>{38ac4d5f-0237-48d3-9f27-6a67491005dc}</Project>

@@ -4,6 +4,7 @@ using System.Collections;
 
 using StackOverflow.Business.Contracts;
 using StackOverflow.Data.Contracts;
+using StackOverflow.Shared.Components.Exceptions;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Business.BusinessComponents.Services
@@ -19,24 +20,87 @@ namespace StackOverflow.Business.BusinessComponents.Services
 
 		public Question Add(Question question)
 		{
-			question.Date = DateTime.Now;
-			question = uow.Questions.Create(question);
+			if (null == question)
+			{
+				throw new NullReferenceException("Question creating error. Parameter is null.");
+			}
 
-			uow.Save();
+			string userId = question.UserId;
+			question.Date = DateTime.Now;
+
+			try
+			{
+				question = uow.Questions.Create(question);
+
+				if (null == question)
+				{
+					throw new Exception("The result of create the question is null.");
+				}
+			}
+			catch (Exception e)
+			{
+				throw new CreateException("Question creating error.", e)
+				{
+					Owner = userId
+				};
+			}
+
+			try
+			{
+				uow.Save();
+			}
+			catch (Exception e)
+			{
+				throw new SaveException("Questions saving error.", e);
+			}
 
 			return question;
 		}
 
 		public IEnumerable<Question> GetAll() 
 		{
-			IEnumerable<Question> result = uow.Questions.GetAll();
+			IEnumerable<Question> result = null;
+
+			try
+			{
+				result = uow.Questions.GetAll();
+			}
+			catch (Exception e)
+			{
+				throw new DbException("Get all questions error.", e);
+			}
+
+			if (null == result)
+			{
+				throw new NotFoundException("The result of all of the questions is null.");
+			}
+
 			return result;
 		}
 
 		public IEnumerable<Question> GetUserQuestions(object userId) 
 		{
-			User user = uow.Users.Get(userId);
+			User user = null;
+
+			try
+			{
+				user = uow.Users.Get(userId);
+
+				if (null == user)
+				{
+					throw new Exception("The result of receiving the user is null.");
+				}
+			}
+			catch (Exception e)
+			{
+				throw new NotFoundException("Error retrieving user by id.", e)
+				{
+					TargetObject = userId
+				};
+			}
+
 			IEnumerable<Question> result = user.Questions;
+
 			return result;
 		}
 
@@ -57,16 +121,97 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return list;
 		}
 
-		public Question GetQuestionById(int id)
+		public Question GetById(int id)
 		{
-			Question result = uow.Questions.Get(id);
+			Question result = null;
+
+			try
+			{
+				result = uow.Questions.Get(id);
+
+				if (null == result)
+				{
+					throw new Exception("The result of receiving the question is null.");
+				}
+			}
+			catch (Exception e)
+			{
+				throw new NotFoundException("Error retrieving question by id.", e)
+				{
+					TargetObject = id
+				};
+			}
+			
 			return result;
 		}
 
 		public void Update(Question question) 
 		{
-			uow.Questions.Update(question);
-			uow.Save();
+			try
+			{
+				uow.Questions.Update(question);
+			}
+			catch (Exception e)
+			{
+				throw new UpdateException("Question updating error.", e)
+				{
+					ObjectId = question.Id
+				};
+			}
+
+			try
+			{
+				uow.Save();
+			}
+			catch (Exception e)
+			{
+				throw new SaveException("Updates saving error.", e);
+			}
+		}
+
+		public bool IsOwner(string userId, int questionId)
+		{
+			User user = null;
+
+			try
+			{
+				user = uow.Users.Get(userId);
+
+				if (null == user)
+				{
+					throw new Exception("The result of receiving the user is null.");
+				}
+			}
+			catch (Exception e)
+			{
+				throw new NotFoundException("Error retrieving user by id.", e)
+				{
+					TargetObject = userId
+				};
+			}
+
+			Question question = null;
+
+			try
+			{
+				question = uow.Questions.Get(questionId);
+
+				if (null == question)
+				{
+					throw new Exception("The result of receiving the question is null.");
+				}
+			}
+			catch (Exception e)
+			{
+				throw new NotFoundException("Error retrieving question by id.", e)
+				{
+					TargetObject = questionId
+				};
+			}
+
+			bool result = user.Id.Equals(question.UserId);
+
+			return result;
 		}
 	}
 }

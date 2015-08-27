@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
+using StackOverflow.Presentation.WebApp.Models.Question;
 
 namespace StackOverflow.Presentation.WebApp.Models.User
 {
@@ -7,6 +7,6 @@ namespace StackOverflow.Presentation.WebApp.Models.User
 	{
 		public UserViewModel User { get; set; }
 		public RatingViewModel Rating { get; set; }
-		public IEnumerable<StackOverflow.Shared.Entities.Question> Questions { get; set; }
+		public IEnumerable<QuestionViewModel> Questions { get; set; }
 	}
 }

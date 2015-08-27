@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace StackOverflow.Presentation.WebApp.Models.Question
 {
-	public class QestionViewModel
+	public class QuestionViewModel
 	{
 		public int Id { get; set; }
 
@@ -25,5 +25,7 @@ namespace StackOverflow.Presentation.WebApp.Models.Question
 
 		public string UserId { get; set; }
 		public string UserName { get; set; }
+		public bool IsClosed { get; set; }
+		public bool IsOwner { get; set; }
 	}
 }

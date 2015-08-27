@@ -1,6 +1,6 @@
-﻿@using StackOverflow.Shared.Entities
+﻿@using StackOverflow.Presentation.WebApp.Models.Question
 
-@model IEnumerable<Question>
+@model IEnumerable<QuestionViewModel>
 
 @{
 	ViewBag.Title = "Index";
@@ -8,8 +8,13 @@
 
 <h2>Active questions</h2>
 
-@foreach (Question question in Model) {
-	<hr />
-	@Html.ActionLink(String.Format("{0} {1}", question.User.FirstName, question.User.LastName), "UserInfo", "About", new { id = question.UserId }, null)
-	@Html.Partial("_QuestionPartial", question)
+@foreach (QuestionViewModel question in Model)
+{
+	<div class="question-container">
+		@Html.ActionLink(question.UserName, "UserInfo", "About", new { id = question.UserId }, null)
+		@Html.Partial("_QuestionPartial", question)
+	</div>
 }
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/slider")

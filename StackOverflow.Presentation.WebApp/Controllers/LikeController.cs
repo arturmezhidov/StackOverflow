@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Microsoft.AspNet.Identity;
+
 using StackOverflow.Business.Contracts;
+using StackOverflow.Presentation.WebApp.Filters;
 using StackOverflow.Presentation.WebApp.Models.Answer;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
 	[Authorize]
+	[ExceptionFilter]
 	public class LikeController : ApiController
 	{
 		private readonly IAnswerService service;

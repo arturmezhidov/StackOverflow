@@ -14,5 +14,6 @@ namespace StackOverflow.Business.Contracts
 		Answer Create(string userId, int questionId, string answer);
 		bool IsLike(string userId, int answerId);
 		UserLike Liking(string userId, int answerId);
+		bool Accept(string userId, int answerId);
 	}
 }

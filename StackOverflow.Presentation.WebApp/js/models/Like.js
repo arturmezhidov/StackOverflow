@@ -1,8 +1,8 @@
 ﻿define(function () {
 
-	function LikePostModel(answerId) {
+	function Like(answerId) {
 		this.AnswerId = answerId;
 	}
 
-	return LikePostModel;
+	return Like;
 })

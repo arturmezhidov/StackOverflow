@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using WebGrease.Css.Extensions;
+
 using StackOverflow.Business.Contracts;
+using StackOverflow.Presentation.WebApp.Filters;
 using StackOverflow.Presentation.WebApp.Models;
 using StackOverflow.Presentation.WebApp.Models.Answer;
 using StackOverflow.Shared.Entities;
-using WebGrease.Css.Extensions;
+
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
+	[ExceptionFilter]
 	public class AnswerController : ApiController
 	{
 		private readonly IAnswerService service;
@@ -65,8 +66,10 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		}
 
 		// PUT api/answer/5
-		public void Put(int id, [FromBody]string value)
+		[HttpPut]
+		public bool Accept(int id, [FromBody]string value)
 		{
+			return service.Accept(User.Identity.GetUserId(), id);
 		}
 
 		// DELETE api/answer/5

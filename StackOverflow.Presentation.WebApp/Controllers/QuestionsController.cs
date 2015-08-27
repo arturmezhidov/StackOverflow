@@ -5,12 +5,14 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 
 using StackOverflow.Business.Contracts;
+using StackOverflow.Presentation.WebApp.Filters;
 using StackOverflow.Presentation.WebApp.Models.Question;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
 	[Authorize]
+	[ExceptionFilter]
 	public class QuestionsController : Controller
 	{
 		private readonly IQuestionService questionService;
@@ -26,7 +28,13 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		public ActionResult Index()
 		{
 			IEnumerable<Question> questions = questionService.GetActiveQuestions();
-			return View(questions);
+
+			Mapper.CreateMap<Question, QuestionViewModel>()
+				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName));
+
+			IList<QuestionViewModel> questionViewModels = Mapper.Map<IEnumerable<Question>, List<QuestionViewModel>>(questions);
+
+			return View(questionViewModels);
 		}
 
 		//
@@ -40,12 +48,12 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		//
 		// POST: /Questions/Create
 		[HttpPost]
-		public ActionResult Create(QestionViewModel model)
+		public ActionResult Create(QuestionViewModel model)
 		{
 			try
 			{
-				Mapper.CreateMap<QestionViewModel, Question>();
-				Question question = Mapper.Map<QestionViewModel, Question>(model);
+				Mapper.CreateMap<QuestionViewModel, Question>();
+				Question question = Mapper.Map<QuestionViewModel, Question>(model);
 
 				question.UserId = User.Identity.GetUserId();
 
@@ -68,20 +76,20 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		// GET: /Questions/Edit/5
 		public ActionResult Edit(int id)
 		{
-			Question question = questionService.GetQuestionById(id);
-			Mapper.CreateMap<Question, QestionViewModel>();
-			QestionViewModel vm = Mapper.Map<Question, QestionViewModel>(question);
+			Question question = questionService.GetById(id);
+			Mapper.CreateMap<Question, QuestionViewModel>();
+			QuestionViewModel vm = Mapper.Map<Question, QuestionViewModel>(question);
 			return View(vm);
 		}
 
 		//
 		// POST: /Questions/Edit/5
 		[HttpPost]
-		public ActionResult Edit(int id, QestionViewModel model)
+		public ActionResult Edit(int id, QuestionViewModel model)
 		{
 			try
 			{
-				Question question = questionService.GetQuestionById(id);
+				Question question = questionService.GetById(id);
 				question.Title = model.Title;
 				question.Content = model.Content;
 				questionService.Update(question);
@@ -99,10 +107,15 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		[AllowAnonymous]
 		public ActionResult Answers(int id)
 		{
-			Question question = questionService.GetQuestionById(id);
-			Mapper.CreateMap<Question, QestionViewModel>();
-			QestionViewModel vm = Mapper.Map<Question, QestionViewModel>(question);
+			Question question = questionService.GetById(id);
+			Mapper.CreateMap<Question, QuestionViewModel>();
+			QuestionViewModel vm = Mapper.Map<Question, QuestionViewModel>(question);
 			vm.UserName = String.Format("{0} {1}", question.User.FirstName, question.User.LastName);
+
+			if (User.Identity.IsAuthenticated)
+			{
+				vm.IsOwner = questionService.IsOwner(User.Identity.GetUserId(), question.Id);
+			}
 
 			return View(vm);
 		}

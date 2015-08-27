@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using StackOverflow.Shared.Components.Logger;
 
 namespace StackOverflow.Presentation.WebApp
 {
@@ -19,6 +20,7 @@ namespace StackOverflow.Presentation.WebApp
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+			FileLogger.InitLogger();
 		}
 	}
 }

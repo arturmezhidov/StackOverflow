@@ -7,6 +7,7 @@
 		this.getAll = getAll;
 		this.getById = getById;
 		this.post = post;
+		this.put = put;
 
 		function getAll(callback) {
 
@@ -42,7 +43,19 @@
 			});
 		}
 
-	}
+		function put(id, data, callback) {
+
+			var url = self.baseUrl + '/' + id;
+
+			$.ajax({
+				url: url,
+				type: 'PUT',
+				data: JSON.stringify(data),
+				contentType: "application/json;charset=utf-8",
+				async: false,
+				success: callback
+			});
+		}}
 
 	return BaseService;
 });

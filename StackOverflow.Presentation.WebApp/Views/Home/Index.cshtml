@@ -1,7 +1,7 @@
-﻿@using StackOverflow.Presentation.WebApp.Properties;
-@using StackOverflow.Shared.Entities;
+﻿@using StackOverflow.Presentation.WebApp.Models.Question
+@using StackOverflow.Presentation.WebApp.Properties;
 
-@model IEnumerable<Question>
+@model IEnumerable<QuestionViewModel>
 
 @{
 	ViewBag.Title = "Home Page";
@@ -14,9 +14,13 @@
 
 <h2>That ask users</h2>
 
-@foreach (Question question in Model)
+@foreach (QuestionViewModel question in Model)
 {
-	<hr />
-	@Html.ActionLink(String.Format("{0} {1}", question.User.FirstName, question.User.LastName), "UserInfo", "About", new { id = question.UserId }, null)
-	@Html.Partial("_QuestionPartial", question)
+	<div class="question-container">
+		@Html.ActionLink(question.UserName, "UserInfo", "About", new { id = question.UserId }, null)
+		@Html.Partial("_QuestionPartial", question)
+	</div>
 }
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/slider")

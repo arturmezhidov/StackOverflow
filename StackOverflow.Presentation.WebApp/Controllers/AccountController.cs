@@ -6,12 +6,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using StackOverflow.Business.Contracts;
+using StackOverflow.Presentation.WebApp.Filters;
 using StackOverflow.Presentation.WebApp.Models.Account;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
+
 	[Authorize]
+	[ExceptionFilter]
 	public class AccountController : Controller
 	{
 		public AccountController(IIdentityUserService identityService)

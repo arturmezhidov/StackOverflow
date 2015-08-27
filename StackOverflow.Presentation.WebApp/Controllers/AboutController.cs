@@ -5,11 +5,14 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 
 using StackOverflow.Business.Contracts;
+using StackOverflow.Presentation.WebApp.Filters;
+using StackOverflow.Presentation.WebApp.Models.Question;
 using StackOverflow.Presentation.WebApp.Models.User;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
 {
+	[ExceptionFilter]
 	public class AboutController : Controller
 	{
 		private readonly IUserService userService;
@@ -21,7 +24,7 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 
 		//
 		// GET: /About/User
-		public ActionResult UserInfo(object id)
+		public ActionResult UserInfo(string id)
 		{
 			if (User.Identity.IsAuthenticated) 
 			{
@@ -42,21 +45,26 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		[Authorize]
 		public ActionResult CurrentUserInfo()
 		{
-			object id = User.Identity.GetUserId();
+			string id = User.Identity.GetUserId();
 
 			User user = userService.GetById(id);
 			UserViewModel userInfo = getUserInfoViewModel(user);
-			IEnumerable<Question> questions = user.Questions;
+			
 
 			Mapper.CreateMap<Rating, RatingViewModel>();
 			Rating rating = userService.GetRating(id);
 			RatingViewModel ratingViewModel = Mapper.Map<Rating, RatingViewModel>(rating);
 
+			IEnumerable<Question> questions = user.Questions;
+			Mapper.CreateMap<Question, QuestionViewModel>()
+				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName));
+			IList<QuestionViewModel> questionViewModels = Mapper.Map<IEnumerable<Question>, List<QuestionViewModel>>(questions);
+
 			UserInfoViewModel viewModel = new UserInfoViewModel() 
 			{
 				User = userInfo,
 				Rating = ratingViewModel,
-				Questions = questions
+				Questions = questionViewModels
 			};
 
 			return View(viewModel);

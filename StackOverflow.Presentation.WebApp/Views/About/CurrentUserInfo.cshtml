@@ -1,4 +1,4 @@
-﻿@using StackOverflow.Shared.Entities
+﻿@using StackOverflow.Presentation.WebApp.Models.Question
 @model StackOverflow.Presentation.WebApp.Models.User.UserInfoViewModel
 
 <h2>About me</h2>
@@ -13,16 +13,21 @@
 <hr />
 <h2>My questions</h2>
 
-@if (Model.Questions.Any()) 
+@if (Model.Questions.Any())
 {
-	foreach (Question question in Model.Questions) 
+	foreach (QuestionViewModel question in Model.Questions)
 	{
-		@Html.Partial("_QuestionPartial", question)
-		<span> | </span>
-		@Html.ActionLink("Edit", "Edit", "Questions", new { id = question.Id }, null)
+		<div class="question-container">
+			@Html.Partial("_QuestionPartial", question)
+			<span> | </span>
+			@Html.ActionLink("Edit", "Edit", "Questions", new { id = question.Id }, null)
+		</div>
 	}
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/slider")
 }
-else 
+else
 {
 	<h4>
 		No questions, to add a question click @Html.ActionLink("here", "Create", "Questions").
