@@ -110,27 +110,36 @@ namespace StackOverflow.Business.BusinessComponents.Services
 
 			list.Sort(delegate(Question question1, Question question2)
 			{
-				//DateTime answer1Date = (from answer
-				//						in question1.Answers
-				//						select answer.Date)
-				//						.Max();
+				DateTime date1 = question1.Date;
+				DateTime date2 = question2.Date;
 
-				//DateTime answer2Date = (from answer
-				//						in question2.Answers
-				//						select answer.Date)
-				//						.Max();
+				if (question1.Answers.Any())
+				{
+					DateTime answerDate = (from answer
+											in question1.Answers
+											select answer.Date)
+											.Max();
 
-				//DateTime date1 = question1.Date > answer1Date
-				//	? question1.Date
-				//	: answer1Date;
+					if (answerDate > date1)
+					{
+						date1 = answerDate;
+					}
+				}
 
-				//DateTime date2 = question2.Date > answer2Date
-				//	? question2.Date
-				//	: answer2Date;
+				if (question2.Answers.Any())
+				{
+					DateTime answerDate = (from answer
+											in question2.Answers
+											select answer.Date)
+											.Max();
 
-				//return date2.CompareTo(date1);
+					if (answerDate > date2)
+					{
+						date2 = answerDate;
+					}
+				}
 
-				return question2.Date.CompareTo(question1.Date);
+				return date2.CompareTo(date1);
 			});
 
 			return list;
