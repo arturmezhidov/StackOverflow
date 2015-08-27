@@ -24,7 +24,7 @@ namespace StackOverflow.Presentation.WebApp
 						"~/Scripts/respond.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/slider").Include(
-						"~/Scripts/slider.js"));
+						"~/js/modules/slider.js"));
 
 			//bundles.Add(new ScriptBundle("~/bundles/main").Include(
 			//			"~/Scripts/require.js",

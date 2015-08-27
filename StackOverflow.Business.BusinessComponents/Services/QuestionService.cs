@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
+using System.Linq;
 
 using StackOverflow.Business.Contracts;
 using StackOverflow.Data.Contracts;
@@ -57,7 +57,7 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return question;
 		}
 
-		public IEnumerable<Question> GetAll() 
+		public IEnumerable<Question> GetAll()
 		{
 			IEnumerable<Question> result = null;
 
@@ -78,7 +78,7 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return result;
 		}
 
-		public IEnumerable<Question> GetUserQuestions(object userId) 
+		public IEnumerable<Question> GetUserQuestions(object userId)
 		{
 			User user = null;
 
@@ -104,16 +104,31 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return result;
 		}
 
-		public IEnumerable<Question> GetActiveQuestions() 
+		public IEnumerable<Question> GetActiveQuestions()
 		{
 			List<Question> list = new List<Question>(uow.Questions.GetAll());
 
-			list.Sort(delegate(Question question1, Question question2) 
+			list.Sort(delegate(Question question1, Question question2)
 			{
-				//DateTime date1 = (from answer 
-				//				 in question1.Answers.
-				//				 orderby answer.Date
-				//				 select answer.Date).Select()
+				//DateTime answer1Date = (from answer
+				//						in question1.Answers
+				//						select answer.Date)
+				//						.Max();
+
+				//DateTime answer2Date = (from answer
+				//						in question2.Answers
+				//						select answer.Date)
+				//						.Max();
+
+				//DateTime date1 = question1.Date > answer1Date
+				//	? question1.Date
+				//	: answer1Date;
+
+				//DateTime date2 = question2.Date > answer2Date
+				//	? question2.Date
+				//	: answer2Date;
+
+				//return date2.CompareTo(date1);
 
 				return question2.Date.CompareTo(question1.Date);
 			});
@@ -141,11 +156,11 @@ namespace StackOverflow.Business.BusinessComponents.Services
 					TargetObject = id
 				};
 			}
-			
+
 			return result;
 		}
 
-		public void Update(Question question) 
+		public void Update(Question question)
 		{
 			try
 			{

@@ -66,6 +66,10 @@
 						});
 						answer.IsAccepted(response);
 						self.isClosed(response);
+
+						if (!answer.Liked()) {
+							self.liking(answer);
+						}
 					});
 			}
 		}

@@ -242,7 +242,7 @@
     <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
-    <Content Include="Scripts\slider.js" />
+    <Content Include="js\modules\slider.js" />
     <Content Include="Views\favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

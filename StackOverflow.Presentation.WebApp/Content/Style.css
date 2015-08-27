@@ -1,0 +1,81 @@
+﻿.list-item {
+	background: aliceblue;
+	margin: 10px;
+	padding: 10px;
+}
+
+.list-item-accepted {
+	background: aquamarine;
+}
+
+.user-ref {
+	margin-bottom: 12px;
+	font-weight: bold;
+}
+
+.answer {
+	text-indent : 30px;
+	text-align : justify;
+}
+
+.date {
+	font-weight: bold;
+}
+
+.accept-container {
+	float: right;
+}
+
+.accept {
+	cursor: pointer;
+}
+
+.accepted {
+	font-size: 18px;
+	color: #3cb371;
+}
+
+.accept:hover {
+	font-size: 18px;
+}
+
+.like-container {
+	display: inline-block;
+	float: right;
+}
+
+.thumbs-up {
+	cursor: pointer;
+}
+
+.thumbs-up-select {
+	font-size: 18px;
+	color: #3cb371;
+}
+
+.question-container {
+	background: #F6F6F6;
+	margin: 10px;
+	padding: 10px;
+}
+
+.show-btn {
+	display: inline-block;
+	float: right;
+}
+
+.eye-open {
+	cursor: pointer;
+	font-size: 22px;
+}
+
+.eye-open:hover {
+	color: #999;
+}
+
+.question-contant{
+	padding: 10px 20px 20px 40px;
+	text-indent : 30px;
+	text-align : justify;
+	display: none;
+}
