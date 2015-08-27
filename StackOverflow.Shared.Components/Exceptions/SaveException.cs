@@ -12,5 +12,10 @@ namespace StackOverflow.Shared.Components.Exceptions
 			: base(message, innerException)
 		{
 		}
+
+		public override string ToString()
+		{
+			return String.Format("Message: {0}.", Message);
+		}
 	}
 }

@@ -10,7 +10,7 @@ namespace StackOverflow.Shared.Components.Logger
 {
 	public static class FileLogger
 	{
-		private static readonly ILog log = LogManager.GetLogger(typeof(FileLogger));
+		private static readonly ILog log = LogManager.GetLogger(typeof(log4net.Repository.Hierarchy.Logger));
 		public static void InitLogger()
 		{
 			XmlConfigurator.Configure();

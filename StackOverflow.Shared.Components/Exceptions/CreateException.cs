@@ -10,13 +10,14 @@ namespace StackOverflow.Shared.Components.Exceptions
 		public CreateException()
 		{
 		}
-		public CreateException(string message)
-			: base(message)
-		{
-		}
 		public CreateException(string message, Exception innerException)
 			: base(message, innerException)
 		{
+		}
+
+		public override string ToString()
+		{
+			return String.Format("Message: {0}, Owner: {1}, Target: {2}.", Message, Owner, Target);
 		}
 	}
 }
