@@ -9,7 +9,7 @@
 <h4>To create a question, type the title and the question</h4>
 <hr />
 
-@using (Html.BeginForm("Create", "Questions", FormMethod.Post, new { role = "form" }))
+@using (Html.BeginForm("Create", "Question", FormMethod.Post, new { role = "form" }))
 {
 	@Html.AntiForgeryToken()
 

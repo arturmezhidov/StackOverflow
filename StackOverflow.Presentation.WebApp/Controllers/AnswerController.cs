@@ -7,7 +7,6 @@ using WebGrease.Css.Extensions;
 
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Filters;
-using StackOverflow.Presentation.WebApp.Models;
 using StackOverflow.Presentation.WebApp.Models.Answer;
 using StackOverflow.Shared.Entities;
 
@@ -17,6 +16,14 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 	[ExceptionFilter]
 	public class AnswerController : ApiController
 	{
+		protected string UserId
+		{
+			get
+			{
+				return User.Identity.GetUserId(); 
+			}
+		}
+
 		private readonly IAnswerService service;
 
 		public AnswerController(IAnswerService service)
@@ -25,56 +32,44 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		}
 
 		// GET api/answer/5
-		public IEnumerable<AnswerViewModel> GetOfQuestion(int id)
+		[HttpGet]
+		public AnswerInfoCollectionViewModel GetOfQuestion(int id)
 		{
-			List<Answer> answers = new List<Answer>(service.GetOfQuestion(id));
+			IEnumerable<Answer> answers = service.GetOfQuestion(id);
 
-			Mapper.CreateMap<Answer, AnswerViewModel>()
-				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName))
-				.ForMember("Date", opt => opt.MapFrom(c => String.Format("{1}, {0}", c.Date.ToShortDateString(), c.Date.ToShortTimeString())));
-
-			IList<AnswerViewModel> result = Mapper.Map<List<Answer>, List<AnswerViewModel>>(answers);
+			AnswerInfoCollectionViewModel answersViewModel = new AnswerInfoCollectionViewModel(answers);
 
 			if (User.Identity.IsAuthenticated)
 			{
-				string userId = User.Identity.GetUserId();
-				result.ForEach(model => model.Liked = service.IsLike(userId, model.Id));
+				answersViewModel.ForEach(model => model.Liked = service.IsLike(UserId, model.Id));
 			}
 
-			return result;
+			return answersViewModel;
 		}
 
 		// POST api/answer
 		[Authorize]
-		public AnswerViewModel Post([FromBody]AnswerPostModel value)
+		public AnswerInfoViewModel Powst([FromBody]AnswerViewModel model)
 		{
-			if (value == null || String.IsNullOrWhiteSpace(value.Description))
+			if (model == null || String.IsNullOrWhiteSpace(model.Description))
 			{
 				return null;
 			}
 
-			Answer answer = service.Create(User.Identity.GetUserId(), value.QuestionId, value.Description);
+			Answer answer = service.Create(UserId, model.QuestionId, model.Description);
 
-			Mapper.CreateMap<Answer, AnswerViewModel>()
-				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName))
-				.ForMember("LikesCount", opt => opt.MapFrom(c => c.Likes.Count))
-				.ForMember("Date", opt => opt.MapFrom(c => String.Format("{1}, {0}", c.Date.ToShortDateString(), c.Date.ToShortTimeString())));
+			AnswerInfoViewModel answerViewModel = new AnswerInfoViewModel(answer);
 
-			AnswerViewModel result = Mapper.Map<Answer, AnswerViewModel>(answer);
-
-			return result;
+			return answerViewModel;
 		}
 
 		// PUT api/answer/5
 		[HttpPut]
 		public bool Accept(int id, [FromBody]string value)
 		{
-			return service.Accept(User.Identity.GetUserId(), id);
-		}
+			bool result = service.Accept(UserId, id);
 
-		// DELETE api/answer/5
-		public void Delete(int id)
-		{
+			return result;
 		}
 	}
 }

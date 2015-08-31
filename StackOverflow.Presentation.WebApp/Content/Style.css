@@ -64,12 +64,11 @@
 	float: right;
 }
 
-.eye-open {
+.show-hide-question {
 	cursor: pointer;
-	font-size: 22px;
 }
 
-.eye-open:hover {
+.show-hide-question:hover {
 	color: #999;
 }
 

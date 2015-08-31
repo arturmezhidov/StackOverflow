@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Models.User 
 {
@@ -19,5 +16,13 @@ namespace StackOverflow.Presentation.WebApp.Models.User
 
 		[DisplayName("Accepted my answers")]
 		public int AcceptedAnswers { get; set; }
+
+		public RatingViewModel(Rating rating)
+		{
+			Questions		= rating.Questions;
+			Answers			= rating.Answers;
+			LikeAnswers		= rating.LikeAnswers;
+			AcceptedAnswers = rating.AcceptedAnswers;
+		}
 	}
 }

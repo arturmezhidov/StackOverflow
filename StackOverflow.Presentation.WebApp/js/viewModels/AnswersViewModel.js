@@ -4,6 +4,7 @@
 		function AnswersViewModel(dataContext) {
 
 			var self = this;
+
 			this.dataContext = dataContext;
 			this.answers = ko.observableArray();
 			this.newAnswer = ko.observable();
@@ -25,16 +26,14 @@
 			}
 			this.add = function () {
 
-				var text = self.newAnswer();
-
-				if (!text) {
+				if (!self.newAnswer()) {
 					return;
 				}
 
 				self
 					.dataContext
 					.answers
-					.post(new Answer(self.questionId, text), function (response) {
+					.post(new Answer(self.questionId, self.newAnswer()), function (response) {
 						if (response) {
 							response.LikesCount = ko.observable(response.LikesCount);
 							response.Liked = ko.observable(response.Liked);

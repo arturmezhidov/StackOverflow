@@ -57,6 +57,20 @@ namespace StackOverflow.Business.BusinessComponents.Services
 			return question;
 		}
 
+		public Question Add(Question question, string userId)
+		{
+			if (null == question)
+			{
+				throw new NullReferenceException("Question creating error. Parameter is null.");
+			}
+
+			question.UserId = userId;
+
+			Question result = Add(question);
+
+			return result;
+		}
+
 		public IEnumerable<Question> GetAll()
 		{
 			IEnumerable<Question> result = null;

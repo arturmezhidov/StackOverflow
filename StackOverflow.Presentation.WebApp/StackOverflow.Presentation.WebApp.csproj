@@ -200,8 +200,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\LikeController.cs" />
-    <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Filters\ExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\UserInfoFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,11 +210,15 @@
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\Account\ManageUserViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
-    <Compile Include="Models\AnswerViewModel.cs" />
-    <Compile Include="Models\Answer\AnswerPostModel.cs" />
-    <Compile Include="Models\Answer\LikeViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerInfoCollectionViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerInfoViewModel.cs" />
+    <Compile Include="Models\Answer\AnswerViewModel.cs" />
+    <Compile Include="Models\Like\LikeInfoViewModel.cs" />
+    <Compile Include="Models\Like\LikeViewModel.cs" />
+    <Compile Include="Models\Question\QuestionInfoCollectionViewModel.cs" />
+    <Compile Include="Models\Question\QuestionInfoViewModel.cs" />
     <Compile Include="Models\Question\QuestionViewModel.cs" />
-    <Compile Include="Models\Question\UserQuestionsViewModel.cs" />
+    <Compile Include="Models\Question\QuestionWithAnswersViewModel.cs" />
     <Compile Include="Models\User\RatingViewModel.cs" />
     <Compile Include="Models\User\UserInfoViewModel.cs" />
     <Compile Include="Models\User\UserViewModel.cs" />
@@ -276,7 +281,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -284,16 +288,17 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Shared\_QuestionPartial.cshtml" />
     <Content Include="Views\Shared\_InputQuestionPartial.cshtml" />
-    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\About\UserInfo.cshtml" />
     <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
     <Content Include="Views\About\CurrentUserInfo.cshtml" />
     <Content Include="Views\Shared\_RatingPartial.cshtml" />
-    <Content Include="Views\Questions\Answers.cshtml" />
+    <Content Include="Views\Question\Answers.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -302,7 +307,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

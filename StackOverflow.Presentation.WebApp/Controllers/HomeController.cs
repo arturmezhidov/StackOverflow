@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using AutoMapper;
 
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Filters;
@@ -23,12 +22,9 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			IEnumerable<Question> questions = service.GetAll();
 
-			Mapper.CreateMap<Question, QuestionViewModel>()
-				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName));
+			QuestionInfoCollectionViewModel questionsViewModel = new QuestionInfoCollectionViewModel(questions);
 
-			IList<QuestionViewModel> result = Mapper.Map<IEnumerable<Question>, List<QuestionViewModel>>(questions);
-
-			return View(result);
+			return View(questionsViewModel);
 		}
 	}
 }

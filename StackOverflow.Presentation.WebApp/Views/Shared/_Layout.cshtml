@@ -24,8 +24,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li>@Html.ActionLink("Home", "Index", "Home")</li>
-					<li>@Html.ActionLink("Add question", "Create", "Questions")</li>
-					<li>@Html.ActionLink("Active question", "Index", "Questions")</li>
+					<li>@Html.ActionLink("Add question", "Create", "Question")</li>
+					<li>@Html.ActionLink("Active question", "Index", "Question")</li>
 					@if (Request.IsAuthenticated)
 					{
 						<li>@Html.ActionLink("About me", "CurrentUserInfo", "About")</li>

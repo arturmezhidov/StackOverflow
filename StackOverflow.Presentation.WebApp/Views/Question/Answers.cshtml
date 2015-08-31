@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-
-@model StackOverflow.Presentation.WebApp.Models.Question.QuestionViewModel
+﻿@model StackOverflow.Presentation.WebApp.Models.Question.QuestionWithAnswersViewModel
 
 @Scripts.Render("~/bundles/jquery")
 
@@ -12,7 +10,7 @@
 		<h4>@Model.Content</h4>
 		<hr />
 		<h5>
-			<span>@Html.ActionLink(@Model.UserName, "UserInfo", "About", new { id = @Model.UserId }, null)</span> |
+			<span>@Html.ActionLink(String.Format("{0} {1}", Model.UserFirstName, Model.UserLastName), "UserInfo", "About", new { id = @Model.UserId }, null)</span> |
 			<span>@Model.Date</span> |
 			<span>Answers <span data-bind="text: answers().length"></span></span>
 		</h5>
@@ -25,7 +23,8 @@
 		<div data-bind="css: { 'list-item-accepted': IsAccepted }" class="list-item">
 			<div class="user-ref">
 				<a data-bind="attr: { href: '/About/UserInfo/' + UserId }">
-					<span data-bind="text: UserName"></span>
+					<span data-bind="text: UserFirstName"></span>
+					<span data-bind="text: UserLastName"></span>
 				</a>
 				@if (Model.IsOwner)
 				{

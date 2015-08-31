@@ -1,8 +1,8 @@
-﻿@model StackOverflow.Presentation.WebApp.Models.Question.QuestionViewModel
+﻿@model StackOverflow.Presentation.WebApp.Models.Question.QuestionInfoViewModel
 
 <br />
 <h4>
-	@Html.ActionLink(Model.Title, "Answers", "Questions", new {id = Model.Id}, null)
+	@Html.ActionLink(Model.Title, "Answers", "Question", new {id = Model.Id}, null)
 </h4>
 
 <div class="question-contant-container">
@@ -10,7 +10,7 @@
 		@Model.Content
 	</div>
 	<div class="show-btn">
-		<span class="glyphicon glyphicon-eye-open eye-open"></span>
+		<span class="show-hide-question">Show/hide question</span>
 	</div>
 </div>
 

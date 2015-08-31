@@ -71,11 +71,12 @@ namespace StackOverflow.Presentation.WebApp.App_Start
 		/// <param name="kernel">The kernel.</param>
 		private static void RegisterServices(IKernel kernel)
 		{
-			var modules = new List<INinjectModule>
+			List<INinjectModule> modules = new List<INinjectModule>
 			{
-				new DataAccessModule("DefaultConnection"),
+				new DataAccessModule("DefaultConnection2"),
 				new BusinessModule()
 			};
+
 			kernel.Load(modules);
 		}
 	}

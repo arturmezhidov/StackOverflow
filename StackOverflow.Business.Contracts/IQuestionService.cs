@@ -7,6 +7,7 @@ namespace StackOverflow.Business.Contracts
 	public interface IQuestionService
 	{
 		Question Add(Question question);
+		Question Add(Question question, string userId);
 		IEnumerable<Question> GetAll();
 		Question GetById(int id);
 		IEnumerable<Question> GetUserQuestions(object userId);

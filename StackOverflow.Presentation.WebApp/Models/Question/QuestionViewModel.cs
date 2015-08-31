@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.UI.WebControls;
 
 namespace StackOverflow.Presentation.WebApp.Models.Question
 {
 	public class QuestionViewModel
 	{
-		public int Id { get; set; }
-
 		[Required]
 		[DisplayName("Question title")]
 		public string Title { get; set; }
@@ -20,12 +13,31 @@ namespace StackOverflow.Presentation.WebApp.Models.Question
 		[DisplayName("Question content")]
 		public string Content { get; set; }
 
-		[DisplayName("Date create")]
-		public DateTime Date { get; set; }
+		public QuestionViewModel() { }
 
-		public string UserId { get; set; }
-		public string UserName { get; set; }
-		public bool IsClosed { get; set; }
-		public bool IsOwner { get; set; }
+		public QuestionViewModel(Shared.Entities.Question question)
+		{
+			Title = question.Title;
+			Content = question.Content;
+		}
+
+		public Shared.Entities.Question ToQuestion()
+		{
+			Shared.Entities.Question question = new Shared.Entities.Question()
+			{
+				Title = Title,
+				Content = Content
+			};
+
+			return question;
+		}
+
+		public Shared.Entities.Question UpdateQuestion(Shared.Entities.Question question)
+		{
+			question.Title = Title;
+			question.Content = Content;
+
+			return question;
+		}
 	}
 }

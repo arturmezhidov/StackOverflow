@@ -3,6 +3,7 @@
 	function BaseService(url) {
 
 		var self = this;
+
 		this.baseUrl = url;
 		this.getAll = getAll;
 		this.getById = getById;

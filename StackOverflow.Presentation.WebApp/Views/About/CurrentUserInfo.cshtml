@@ -15,12 +15,12 @@
 
 @if (Model.Questions.Any())
 {
-	foreach (QuestionViewModel question in Model.Questions)
+	foreach (QuestionInfoViewModel question in Model.Questions)
 	{
 		<div class="question-container">
 			@Html.Partial("_QuestionPartial", question)
 			<span> | </span>
-			@Html.ActionLink("Edit", "Edit", "Questions", new { id = question.Id }, null)
+			@Html.ActionLink("Edit", "Edit", "Question", new { id = question.Id }, null)
 		</div>
 	}
 
@@ -30,6 +30,6 @@
 else
 {
 	<h4>
-		No questions, to add a question click @Html.ActionLink("here", "Create", "Questions").
+		No questions, to add a question click @Html.ActionLink("here", "Create", "Question").
 	</h4>
 }

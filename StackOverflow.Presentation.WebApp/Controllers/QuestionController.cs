@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using AutoMapper;
 using Microsoft.AspNet.Identity;
 
 using StackOverflow.Business.Contracts;
@@ -13,11 +11,11 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 {
 	[Authorize]
 	[ExceptionFilter]
-	public class QuestionsController : Controller
+	public class QuestionController : Controller
 	{
 		private readonly IQuestionService questionService;
 
-		public QuestionsController(IQuestionService questionService)
+		public QuestionController(IQuestionService questionService)
 		{
 			this.questionService = questionService;
 		}
@@ -29,12 +27,9 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			IEnumerable<Question> questions = questionService.GetActiveQuestions();
 
-			Mapper.CreateMap<Question, QuestionViewModel>()
-				.ForMember("UserName", opt => opt.MapFrom(c => c.User.FirstName + " " + c.User.LastName));
+			QuestionInfoCollectionViewModel questionsViewModel = new QuestionInfoCollectionViewModel(questions);
 
-			IList<QuestionViewModel> questionViewModels = Mapper.Map<IEnumerable<Question>, List<QuestionViewModel>>(questions);
-
-			return View(questionViewModels);
+			return View(questionsViewModel);
 		}
 
 		//
@@ -52,16 +47,13 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		{
 			try
 			{
-				Mapper.CreateMap<QuestionViewModel, Question>();
-				Question question = Mapper.Map<QuestionViewModel, Question>(model);
+				Question question = model.ToQuestion();
 
-				question.UserId = User.Identity.GetUserId();
-
-				question = questionService.Add(question);
+				question = questionService.Add(question, User.Identity.GetUserId());
 
 				return RedirectToRoute(new
 				{
-					controller = "Questions",
+					controller = "Question",
 					action = "Answers",
 					id = question.Id
 				});
@@ -77,9 +69,10 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		public ActionResult Edit(int id)
 		{
 			Question question = questionService.GetById(id);
-			Mapper.CreateMap<Question, QuestionViewModel>();
-			QuestionViewModel vm = Mapper.Map<Question, QuestionViewModel>(question);
-			return View(vm);
+
+			QuestionViewModel questionViewModel = new QuestionViewModel(question);
+
+			return View(questionViewModel);
 		}
 
 		//
@@ -90,8 +83,9 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 			try
 			{
 				Question question = questionService.GetById(id);
-				question.Title = model.Title;
-				question.Content = model.Content;
+
+				question = model.UpdateQuestion(question);
+
 				questionService.Update(question);
 
 				return RedirectToAction("Index");
@@ -108,16 +102,15 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		public ActionResult Answers(int id)
 		{
 			Question question = questionService.GetById(id);
-			Mapper.CreateMap<Question, QuestionViewModel>();
-			QuestionViewModel vm = Mapper.Map<Question, QuestionViewModel>(question);
-			vm.UserName = String.Format("{0} {1}", question.User.FirstName, question.User.LastName);
+
+			QuestionWithAnswersViewModel questionWithAnswersViewModel = new QuestionWithAnswersViewModel(question);
 
 			if (User.Identity.IsAuthenticated)
 			{
-				vm.IsOwner = questionService.IsOwner(User.Identity.GetUserId(), question.Id);
+				questionWithAnswersViewModel.IsOwner = questionService.IsOwner(User.Identity.GetUserId(), question.Id);
 			}
 
-			return View(vm);
+			return View(questionWithAnswersViewModel);
 		}
 	}
 }

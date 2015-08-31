@@ -1,6 +1,6 @@
 ﻿@model StackOverflow.Presentation.WebApp.Models.Question.QestionViewModel
 
-@using (Html.BeginForm("Create", "Questions", FormMethod.Post, new { role = "form" }))
+@using (Html.BeginForm("Create", "Question", FormMethod.Post, new { role = "form" }))
 {
 	@Html.AntiForgeryToken()
 

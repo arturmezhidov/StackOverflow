@@ -1,7 +1,7 @@
 ﻿@using StackOverflow.Presentation.WebApp.Models.Question
 @using StackOverflow.Presentation.WebApp.Properties;
 
-@model IEnumerable<QuestionViewModel>
+@model QuestionInfoCollectionViewModel
 
 @{
 	ViewBag.Title = "Home Page";
@@ -9,15 +9,15 @@
 
 <div class="jumbotron">
 	<h1>@Resources.ApplicationName</h1>
-	<p class="lead">You can ask your question by clicking @Html.ActionLink("here", "Create", "Questions").</p>
+	<p class="lead">You can ask your question by clicking @Html.ActionLink("here", "Create", "Question").</p>
 </div>
 
 <h2>That ask users</h2>
 
-@foreach (QuestionViewModel question in Model)
+@foreach (QuestionInfoViewModel question in Model)
 {
 	<div class="question-container">
-		@Html.ActionLink(question.UserName, "UserInfo", "About", new { id = question.UserId }, null)
+		@Html.ActionLink(String.Format("{0} {1}", question.UserFirstName, question.UserLastName), "UserInfo", "About", new { id = question.UserId }, null)
 		@Html.Partial("_QuestionPartial", question)
 	</div>
 }

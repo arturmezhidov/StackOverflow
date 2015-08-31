@@ -1,6 +1,6 @@
 ﻿@using StackOverflow.Presentation.WebApp.Models.Question
 
-@model IEnumerable<QuestionViewModel>
+@model QuestionInfoCollectionViewModel
 
 @{
 	ViewBag.Title = "Index";
@@ -8,10 +8,10 @@
 
 <h2>Active questions</h2>
 
-@foreach (QuestionViewModel question in Model)
+@foreach (QuestionInfoViewModel question in Model)
 {
 	<div class="question-container">
-		@Html.ActionLink(question.UserName, "UserInfo", "About", new { id = question.UserId }, null)
+		@Html.ActionLink(String.Format("{0} {1}", question.UserFirstName, question.UserLastName), "UserInfo", "About", new { id = question.UserId }, null)
 		@Html.Partial("_QuestionPartial", question)
 	</div>
 }

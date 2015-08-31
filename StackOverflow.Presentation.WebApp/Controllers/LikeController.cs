@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Filters;
-using StackOverflow.Presentation.WebApp.Models.Answer;
+using StackOverflow.Presentation.WebApp.Models.Like;
 using StackOverflow.Shared.Entities;
 
 namespace StackOverflow.Presentation.WebApp.Controllers
@@ -12,6 +12,14 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 	[ExceptionFilter]
 	public class LikeController : ApiController
 	{
+		protected string UserId
+		{
+			get
+			{
+				return User.Identity.GetUserId(); 
+			}
+		}
+
 		private readonly IAnswerService service;
 
 		public LikeController(IAnswerService service)
@@ -20,18 +28,13 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 		}
 
 		// POST api/like
-		public LikeViewModel Post([FromBody]LikeViewModel model)
+		public LikeInfoViewModel Post([FromBody]LikeViewModel model)
 		{
-			string userId = User.Identity.GetUserId();
-			int answerId = model.AnswerId;
+			UserLike like = service.Liking(UserId, model.AnswerId);
 
-			UserLike like = service.Liking(userId, answerId);
+			LikeInfoViewModel likeViewModel = new LikeInfoViewModel(like, true);
 
-			model.LikesCount = like.LikesCount;
-			model.Liked = like.Liked;
-			model.Success = true;
-
-			return model;
+			return likeViewModel;
 		}
 	}
 }

@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+
 using StackOverflow.Business.Contracts;
 using StackOverflow.Presentation.WebApp.Filters;
 using StackOverflow.Presentation.WebApp.Models.Account;
@@ -77,7 +78,7 @@ namespace StackOverflow.Presentation.WebApp.Controllers
 			{
 				Mapper.CreateMap<RegisterViewModel, User>();
 				IdentityUser user = Mapper.Map<RegisterViewModel, User>(model);
-				user.UserName = model.Email;
+				user.UserName = model.Nickname;
 
 				var result = await UserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
